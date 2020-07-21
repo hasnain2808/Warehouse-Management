@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}View Location{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="table-responsive">
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Location Id</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                {% for location in result %}
+                <tr>
+                    <td>{{location.location_id}}</td>
+
+                    <td><a href={{ "delete_location/"  + location.location_id  | string() }}> <span
+                                class="glyphicon glyphicon-remove"></span>
+                        </a>
+
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

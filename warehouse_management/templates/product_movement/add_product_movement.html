@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Add Product Movement{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <form method="post" >
+
+    <div class="row">
+      <div class="mb-3">
+      <label for="quantity">quantity</label>
+      <input type="number" name="quantity" id="quantity" required class="form-control">
+    </div>
+    </div>
+
+    <div class="row">
+      <label for="from location:">from location</label>
+      <select name="from_location_id" class="form-control">
+        <option value="0">---</option>
+        {% for location in res.locations %}
+        <option value="{{ location }}">{{ location }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="row">
+      <label for="to location:">to location</label>
+      <select name="to_location_id" class="form-control">
+        <option value="0">---</option>
+
+        {% for location in res.locations %}
+        <option value="{{ location }}">{{ location }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="row">
+      <label for="product">product</label>
+      <select name="product_id" class="form-control">
+        {% for product in res.product_list %}
+        <option value="{{ product.product_id }}">{{ product.product_id }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="row">
+      <input type="submit" class="btn btn-primary " value="add new movement">
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Product Movement Update{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <form method="post" action="{{  res.prod_mov[0]  | string() }}">
+    <div class="row">
+      <div class="mb-3">
+        <label for="quantity">quantity</label>
+        <input type="number" name="quantity" id="quantity" required value="{{res.prod_mov[4]}}" class="form-control">
+
+      </div>
+    </div>
+    <div class="row">
+
+      <label for="from location:">from location</label>
+
+      <select name="from_location_id" class="form-control">
+        <option value="0">---</option>
+
+        {% for location in res.locations %}
+        <option value="{{ location }}" {% if (location == res.prod_mov[1]) %} selected="selected" {% endif %}>
+          {{ location }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="row">
+
+
+      <label for="to location:">to location</label>
+
+
+      <select name="to_location_id" class="form-control">
+        <option value="0">---</option>
+
+        {% for location in res.locations %}
+        <option value="{{ location }}" {% if (location == res.prod_mov[2]) %} selected="selected" {% endif %}>
+          {{ location }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="row">
+
+      <label for="product">product</label>
+
+      <select name="product_id" class="form-control">
+        {% for product in res.product_list %}
+        <option value="{{ product.product_id }}" {% if (product.product_id == res.prod_mov[3]) %} selected="selected"
+          {% endif %}>{{ product.product_id }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="row">
+      <input type="submit" value="Update Movement" class="btn btn-primary">
+    </div>
+  </form>
+</div>
+{% endblock %}
