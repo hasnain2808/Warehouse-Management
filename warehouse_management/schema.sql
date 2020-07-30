@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS Location;
 DROP TABLE IF EXISTS ProductMovement;
 
 CREATE TABLE Product (
-  product_id INTEGER PRIMARY KEY AUTOINCREMENT
+  product_id TEXT PRIMARY KEY
   );
 
 CREATE TABLE Location (
