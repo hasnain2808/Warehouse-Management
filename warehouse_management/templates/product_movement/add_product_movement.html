@@ -5,19 +5,81 @@
 {% endblock %}
 
 {% block content %}
+
+<script type=text/javascript>
+
+  function validateQuantity() {
+  var quantity = document.getElementById("quantity").value;
+  var message = document.getElementById("quantity_error_span");
+  if (quantity   == "" ){
+    message.innerHTML="\"Quantity\" cannot be empty";
+    message.style.visibility="visible";
+    return false
+  }
+  else{
+    message.style.visibility="hidden";
+    return true
+  }
+}
+
+function validateFromLocationSelect(){
+  var from = document.getElementById("from_location_id").selectedIndex;
+  var to = document.getElementById("to_location_id").selectedIndex;
+  var from_message = document.getElementById("from_location_id_error_span");
+  var to_message = document.getElementById("to_location_id_error_span");
+
+ if(from==to){
+    from_message.innerHTML="\"From Location\" cannot be equal to \"To Location\"";
+    from_message.style.visibility="visible";
+    return false
+  }
+  else{
+    from_message.style.visibility="hidden";
+    to_message.style.visibility="hidden";
+    return true
+  }
+}
+
+function validateToLocationSelect(){
+  var from = document.getElementById("from_location_id").selectedIndex;
+  var to = document.getElementById("to_location_id").selectedIndex;
+  var from_message = document.getElementById("from_location_id_error_span");
+  var to_message = document.getElementById("to_location_id_error_span");
+  if(from==to){
+    to_message.innerHTML="\"To Location\" cannot be equal to \"From Location\"";
+    to_message.style.visibility="visible";
+    return false
+  }
+  else{
+    to_message.style.visibility="hidden";
+    from_message.style.visibility="hidden";
+    return true
+  }
+}
+
+function validateAll(){
+  return ( validateFromLocationSelect() && validateQuantity() && validateToLocationSelect() );
+}
+
+</script>
+
 <div class="container">
-  <form method="post" >
+  <form method="post" onsubmit="return validateAll()"  >
 
-    <div class="row">
+    <div class="form-group">
       <div class="mb-3">
-      <label for="quantity">quantity</label>
-      <input type="number" name="quantity" id="quantity" required class="form-control">
-    </div>
+        <label for="quantity">Quantity</label>
+        <span id="quantity_error_span" class="label label-danger pull-right" style="visibility:hidden"></span>
+        <input type="number" name="quantity" id="quantity"  class="form-control"
+          onfocusout="validateQuantity()">
+      </div>
     </div>
 
-    <div class="row">
-      <label for="from location:">from location</label>
-      <select name="from_location_id" class="form-control">
+    <div class="form-group">
+      <label for="from location:">From Location</label>
+      <span id="from_location_id_error_span" class="label label-danger pull-right" style="visibility:hidden"></span>
+      <select name="from_location_id" id="from_location_id" class="form-control"
+        onchange="validateFromLocationSelect()">
         <option value="0">---</option>
         {% for location in res.locations %}
         <option value="{{ location }}">{{ location }}</option>
@@ -25,9 +87,10 @@
       </select>
     </div>
 
-    <div class="row">
-      <label for="to location:">to location</label>
-      <select name="to_location_id" class="form-control">
+    <div class="form-group">
+      <label for="to location:">To Location</label>
+      <span id="to_location_id_error_span" class="label label-danger pull-right" style="visibility:hidden"></span>
+      <select name="to_location_id" id="to_location_id" class="form-control" onchange="validateToLocationSelect()">
         <option value="0">---</option>
 
         {% for location in res.locations %}
@@ -36,8 +99,8 @@
       </select>
     </div>
 
-    <div class="row">
-      <label for="product">product</label>
+    <div class="form-group">
+      <label for="product">Product</label>
       <select name="product_id" class="form-control">
         {% for product in res.product_list %}
         <option value="{{ product.product_id }}">{{ product.product_id }}</option>
@@ -45,8 +108,10 @@
       </select>
     </div>
 
-    <div class="row">
-      <input type="submit" class="btn btn-primary " value="add new movement">
+    <div class="form-group">
+      <input type="submit"       class="btn btn-primary " value="Add New Movement">
+
+      <!-- onsubmit="return validateAll()"   -->
     </div>
   </form>
 </div>

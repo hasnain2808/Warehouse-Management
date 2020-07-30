@@ -20,14 +20,18 @@ def add_product():
 
     """
     if request.method == "POST":
-        try:
-            db = get_db()
-            db.execute("INSERT INTO Product DEFAULT VALUES ",)
-            db.commit()
-            return redirect(url_for("product.add_product"))
-        except sqlite3.Error as error:
-            print(error)
-            return render_template("error_occured.html")
+        # try:
+        product_id = request.form["product_id"]
+        print(product_id)
+        db = get_db()
+        db.execute("INSERT INTO Product (product_id) VALUES (?)",
+            (product_id,)
+        )
+        db.commit()
+        return redirect(url_for("product.add_product"))
+        # except sqlite3.Error as error:
+        #     print(error)
+        #     return render_template("error_occured.html")
 
     return render_template("product/add_product.html")
 

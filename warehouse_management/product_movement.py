@@ -13,6 +13,26 @@ from warehouse_management.db import get_db
 bp = Blueprint("product_movement", __name__, url_prefix="/product_movement")
 
 
+def validate(quantity, from_location_id, to_location_id, product_id):
+    error = None
+    if not quantity:
+        error = "quantity is required."
+    elif not from_location_id:
+        error = "from_location_id is required."
+    elif to_location_id == "0" and from_location_id == "0":
+        error = "to_location_id or from_location_id is required."
+    elif to_location_id == from_location_id:
+        error = "to_location_id and from_location_id cannot be same."
+    elif to_location_id == "0":
+        to_location_id = None
+    elif from_location_id == "0":
+        from_location_id = None
+    
+    elif not product_id:
+        error = "product_id is required."
+
+    return error
+
 @bp.route("/add_product_movement", methods=("GET", "POST"))
 def add_product_movement():
     """Add a new product Movement
@@ -22,22 +42,10 @@ def add_product_movement():
         from_location_id = request.form["from_location_id"]
         to_location_id = request.form["to_location_id"]
         product_id = request.form["product_id"]
-        error = None
-        if not quantity:
-            error = "quantity is required."
-        elif not from_location_id:
-            error = "from_location_id is required."
 
-        elif to_location_id == "0" and from_location_id == "0":
-            error = "to_location_id or from_location_id is required."
-        elif to_location_id == "0":
-            to_location_id = None
-        elif from_location_id == "0":
-            from_location_id = None
-        elif not product_id:
-            error = "product_id is required."
+        error = validate(quantity, from_location_id, to_location_id, product_id)
+
         if error is None:
-
             try:
                 db = get_db()
                 db.execute(
