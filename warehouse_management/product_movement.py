@@ -53,10 +53,23 @@ def add_product_movement():
                     (from_location_id, to_location_id, product_id, quantity),
                 )
                 db.commit()
-                return redirect(url_for("product_movement.add_product_movement"))
+
+                db = get_db()
+                location_list = db.execute("SELECT location_id FROM Location",)
+                product_list = db.execute("SELECT product_id FROM Product ",)
+
+                locations = [location[0] for location in location_list]
+                return render_template(
+                    "product_movement/add_product_movement.html",
+                    res={"locations": locations, "product_list": product_list,"visible":True},
+                )
+
             except sqlite3.Error as error:
                 print(error)
                 return render_template("error_occured.html")
+
+
+
 
         flash(error)
     try:
@@ -69,7 +82,7 @@ def add_product_movement():
     locations = [location[0] for location in location_list]
     return render_template(
         "product_movement/add_product_movement.html",
-        res={"locations": locations, "product_list": product_list,},
+        res={"locations": locations, "product_list": product_list},
     )
 
 

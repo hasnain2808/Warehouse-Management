@@ -5,31 +5,39 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="table-responsive">
+<div class="col-md-4"></div>
+<div class="col-md-4 container">
 
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Location Id</th>
-                </tr>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Location Listing
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
 
-            </thead>
-            <tbody>
-                {% for location in result %}
-                <tr>
-                    <td>{{location.location_id}}</td>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Location Id</th>
+                        </tr>
 
-                    <td><a href={{ "delete_location/"  + location.location_id  | string() }}> <span
-                                class="glyphicon glyphicon-remove"></span>
-                        </a>
+                    </thead>
+                    <tbody>
+                        {% for location in result %}
+                        <tr>
+                            <td>{{location.location_id}}</td>
 
-                </tr>
-                {% endfor %}
+                            <td><a href={{ "delete_location/"  + location.location_id  | string() }}> <span
+                                        class="glyphicon glyphicon-remove"></span>
+                                </a>
 
-            </tbody>
-        </table>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
-
 {% endblock %}

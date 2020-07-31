@@ -6,32 +6,42 @@
 
 {% block content %}
 
-<div class="container">
+<div class="col-md-4"></div>
+<div class="col-md-4 container">
 
-    <div class="table-responsive">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Product Listing
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
 
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Product Id</th>
-                    <th>Delete</th>
-                </tr>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Product Id</th>
+                            <th>Product Name</th>
+                            <th>Delete</th>
+                        </tr>
 
-            </thead>
-            <tbody>
-                {% for product in result %}
-                <tr>
-                    <td>{{product.product_id}}</td>
-                    <td><a href={{ "delete_product/"  + product.product_id  | string() }}> <span
-                                class="glyphicon glyphicon-remove"></span>
-                        </a>
+                    </thead>
+                    <tbody>
+                        {% for product in result %}
+                        <tr>
+                            <td>{{product.product_id}}</td>
+                            <td>{{product.product_name}}</td>
+                            <td><a href={{ "delete_product/"  + product.product_id  | string() }}> <span
+                                        class="glyphicon glyphicon-remove"></span>
+                                </a>
 
-                </tr>
-                {% endfor %}
+                        </tr>
+                        {% endfor %}
 
-            </tbody>
-        </table>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
-
 </div>
 {% endblock %}

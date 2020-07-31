@@ -23,11 +23,11 @@ def add_location():
             db = get_db()
             db.execute("INSERT INTO Location DEFAULT VALUES",)
             db.commit()
-            return redirect(url_for("location.add_location"))
+            return render_template("location/add_location.html",res={"visible":True},)
         except sqlite3.Error as error:
             print(error)
             return render_template("error_occured.html")
-    return render_template("location/add_location.html")
+    return render_template("location/add_location.html",res={"visible":False},)
 
 
 @bp.route("/view_location", methods=["GET"])

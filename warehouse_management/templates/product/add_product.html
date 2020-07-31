@@ -1,15 +1,62 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Add Product{% endblock %}</h1>
+<h1>{% block title %}Add Product{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
-<div class="container">
 
-  <form method="post">
-    <input name="product_id" id="product_id" required class="form-control">
-    <input type="submit" value="add new product" class="btn btn-primary">
+<script type=text/javascript>
+
+
+  function validateProductId() {
+    var product_id = document.getElementById("product_id").value;
+    var message = document.getElementById("product_id_error_span");
+    if (product_id   == "" ){
+      message.innerHTML="\"Product Id\" cannot be empty";
+      message.style.visibility="visible";
+      return false
+    }
+    else{
+      message.style.visibility="hidden";
+      return true
+    }
+
+  }
+  function validateAll() {
+    return validateProductId();
+  }
+
+</script>
+
+<div class="col-md-4"></div>
+<div class="col-md-4 container">
+  <form method="post" onsubmit="return validateAll()">
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Add Product
+                    {% if res.visible %}
+                    <span id="to_location_id_error_span" class="pull-right" style="display: inline;  padding: 1px; color: green;">  Added successfully
+                    </span >
+            
+                    {% endif %}
+      </div>
+      <div class="panel-body">
+        <div class="form-group">
+          <div class="mb-3">
+            <label for="product_id">Product Name</label>
+            <span id="product_id_error_span" class="label label-danger pull-right" style="visibility:hidden"></span>
+            <input name="product_id" id="product_id" class="form-control" onfocusout="validateProductId()">
+          </div>
+        </div>
+
+        <div class="form-group ">
+          <input type="submit" value="Add New Product" class="btn btn-primary btn-block">
+        </div>
+
+      </div>
+    </div>
   </form>
-  </div>
+</div>
 {% endblock %}

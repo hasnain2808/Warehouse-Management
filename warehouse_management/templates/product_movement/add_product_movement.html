@@ -63,56 +63,84 @@ function validateAll(){
 
 </script>
 
-<div class="container">
-  <form method="post" onsubmit="return validateAll()"  >
 
-    <div class="form-group">
-      <div class="mb-3">
-        <label for="quantity">Quantity</label>
-        <span id="quantity_error_span" class="label label-danger pull-right" style="visibility:hidden"></span>
-        <input type="number" name="quantity" id="quantity"  class="form-control"
-          onfocusout="validateQuantity()">
+
+
+<div class="col-md-4"></div>
+<div class="col-md-4 container">
+  <form method="post" onsubmit="return validateAll()">
+
+    
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Add Product Movement
+        {% if res.visible %}
+        <span id="to_location_id_error_span" class="pull-right" style="display: inline;  padding: 1px; color: green;">  Added successfully
+        </span >
+
+        {% endif %}
+
       </div>
-    </div>
+      <div class="panel-body">
 
-    <div class="form-group">
-      <label for="from location:">From Location</label>
-      <span id="from_location_id_error_span" class="label label-danger pull-right" style="visibility:hidden"></span>
-      <select name="from_location_id" id="from_location_id" class="form-control"
-        onchange="validateFromLocationSelect()">
-        <option value="0">---</option>
-        {% for location in res.locations %}
-        <option value="{{ location }}">{{ location }}</option>
-        {% endfor %}
-      </select>
-    </div>
+        <div class="form-group">
+          <div class="mb-3">
+            <label for="quantity">Quantity</label>
+            <span id="quantity_error_span" class="label label-danger pull-right" style="visibility:hidden"></span>
+            <input type="number" name="quantity" id="quantity" class="form-control" onfocusout="validateQuantity()">
+          </div>
+        </div>
 
-    <div class="form-group">
-      <label for="to location:">To Location</label>
-      <span id="to_location_id_error_span" class="label label-danger pull-right" style="visibility:hidden"></span>
-      <select name="to_location_id" id="to_location_id" class="form-control" onchange="validateToLocationSelect()">
-        <option value="0">---</option>
+        <div class="form-group">
+          <label for="from location:">From Location</label>
+          <span id="from_location_id_error_span" class="label label-danger pull-right" style="visibility:hidden"></span>
+          <select name="from_location_id" id="from_location_id" class="form-control"
+            onchange="validateFromLocationSelect()">
+            <option value="0">---</option>
+            {% for location in res.locations %}
+            <option value="{{ location }}">{{ location }}</option>
+            {% endfor %}
+          </select>
+        </div>
 
-        {% for location in res.locations %}
-        <option value="{{ location }}">{{ location }}</option>
-        {% endfor %}
-      </select>
-    </div>
+        <div class="form-group">
+          <label for="to location:">To Location</label>
+          <span id="to_location_id_error_span" class="label label-danger pull-right" style="visibility:hidden"></span>
+          <select name="to_location_id" id="to_location_id" class="form-control" onchange="validateToLocationSelect()">
+            <option value="0">---</option>
 
-    <div class="form-group">
-      <label for="product">Product</label>
-      <select name="product_id" class="form-control">
-        {% for product in res.product_list %}
-        <option value="{{ product.product_id }}">{{ product.product_id }}</option>
-        {% endfor %}
-      </select>
-    </div>
+            {% for location in res.locations %}
+            <option value="{{ location }}">{{ location }}</option>
+            {% endfor %}
+          </select>
+        </div>
 
-    <div class="form-group">
-      <input type="submit"       class="btn btn-primary " value="Add New Movement">
+        <div class="form-group">
+          <label for="product">Product</label>
+          <select name="product_id" class="form-control">
+            {% for product in res.product_list %}
+            <option value="{{ product.product_id }}">{{ product.product_id }}</option>
+            {% endfor %}
+          </select>
+        </div>
 
-      <!-- onsubmit="return validateAll()"   -->
+        <div class="form-group ">
+
+          <input type="submit" class="btn btn-primary btn-block " value="Add New Movement">
+
+
+          <!-- onsubmit="return validateAll()"   -->
+        </div>
+        <!-- <div class="form-group ">
+
+        </div> -->
+      </div>
+
     </div>
   </form>
+
 </div>
+
+
+
 {% endblock %}

@@ -5,33 +5,45 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="table-responsive">
+<div class="col-md-2"></div>
+<div class="col-md-8 container">
 
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Warehouse</th>
-                    <th>Quantity</th>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Product Report
+        </div>
+        <div class="panel-body">
 
-                </tr>
-            </thead>
-            <tbody>
-                {% for location,product in result.items() %}
-                {% for product,quantity in  result[location].items() %}
-                <tr>
-                    <td>{{product}}</td>
-                    <td>{{location}}</td>
-                    <td>{{quantity}}</td>
+            <div class="table-responsive">
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Warehouse</th>
+                            <th>Quantity</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for location,product in result.items() %}
+                        {% for product,quantity in  result[location].items() %}
+                        <tr>
+                            <td>{{product}}</td>
+                            <td>{{location}}</td>
+                            <td>{{quantity}}</td>
 
 
 
-                </tr>
-                {% endfor %}
-                {% endfor %}
-            </tbody>
-        </table>
+                        </tr>
+                        {% endfor %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
     </div>
 
 </div>

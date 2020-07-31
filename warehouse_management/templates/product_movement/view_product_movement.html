@@ -6,42 +6,50 @@
 
 {% block content %}
 <div class="container">
-    <div class="table-responsive">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Product Movement Listing
+        </div>
+        <div class="panel-body">
 
-        <table class="table table-striped ">
-            <thead>
-                <tr>
-                    <th>Movement Id</th>
-                    <th>Timestamp</th>
-                    <th>From Location</th>
-                    <th>To Location</th>
-                    <th>Product Id</th>
-                    <th>Quantity</th>
-                    <th>Update</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for movement in result %}
-                <tr>
-                    <td>{{movement.movement_id}}</td>
-                    <td>{{movement.timestamp}}</td>
-                    <td>{{movement.from_location}}</td>
-                    <td>{{movement.to_location}}</td>
-                    <td>{{movement.product_id}}</td>
-                    <td>{{movement.qty}}</td>
-                    <td ><a href={{ "update_product_movement/"  + movement.movement_id  | string() }}> <span
-                                class="glyphicon glyphicon-pencil"></span>
-                        </a>
-                    <td ><a href={{ "delete_product_movement/"  + movement.movement_id  | string() }}> <span
-                                class="glyphicon glyphicon-remove"></span>
-                        </a>
 
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+            <div class="table-responsive">
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Movement Id</th>
+                            <th>Timestamp</th>
+                            <th>From Location</th>
+                            <th>To Location</th>
+                            <th>Product Id</th>
+                            <th>Quantity</th>
+                            <th>Update</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for movement in result %}
+                        <tr>
+                            <td>{{movement.movement_id}}</td>
+                            <td>{{movement.timestamp}}</td>
+                            <td>{{movement.from_location}}</td>
+                            <td>{{movement.to_location}}</td>
+                            <td>{{movement.product_id}}</td>
+                            <td>{{movement.qty}}</td>
+                            <td><a href={{ "update_product_movement/"  + movement.movement_id  | string() }}> <span
+                                        class="glyphicon glyphicon-pencil"></span>
+                                </a>
+                            <td><a href={{ "delete_product_movement/"  + movement.movement_id  | string() }}> <span
+                                        class="glyphicon glyphicon-remove"></span>
+                                </a>
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-
 </div>
 {% endblock %}

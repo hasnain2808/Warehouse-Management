@@ -5,59 +5,140 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
 
-  <form method="post" action="{{  res.prod_mov[0]  | string() }}">
-    <div class="row">
-      <div class="mb-3">
-        <label for="quantity">quantity</label>
-        <input type="number" name="quantity" id="quantity" required value="{{res.prod_mov[4]}}" class="form-control">
+<script type=text/javascript>
 
+  function validateQuantity() {
+  var quantity = document.getElementById("quantity").value;
+  var message = document.getElementById("quantity_error_span");
+  if (quantity   == "" ){
+    message.innerHTML="\"Quantity\" cannot be empty";
+    message.style.visibility="visible";
+    return false
+  }
+  else{
+    message.style.visibility="hidden";
+    return true
+  }
+}
+
+function validateFromLocationSelect(){
+  var from = document.getElementById("from_location_id").selectedIndex;
+  var to = document.getElementById("to_location_id").selectedIndex;
+  var from_message = document.getElementById("from_location_id_error_span");
+  var to_message = document.getElementById("to_location_id_error_span");
+
+ if(from==to){
+    from_message.innerHTML="\"From Location\" cannot be equal to \"To Location\"";
+    from_message.style.visibility="visible";
+    return false
+  }
+  else{
+    from_message.style.visibility="hidden";
+    to_message.style.visibility="hidden";
+    return true
+  }
+}
+
+function validateToLocationSelect(){
+  var from = document.getElementById("from_location_id").selectedIndex;
+  var to = document.getElementById("to_location_id").selectedIndex;
+  var from_message = document.getElementById("from_location_id_error_span");
+  var to_message = document.getElementById("to_location_id_error_span");
+  if(from==to){
+    to_message.innerHTML="\"To Location\" cannot be equal to \"From Location\"";
+    to_message.style.visibility="visible";
+    return false
+  }
+  else{
+    to_message.style.visibility="hidden";
+    from_message.style.visibility="hidden";
+    return true
+  }
+}
+
+function validateAll(){
+  return ( validateFromLocationSelect() && validateQuantity() && validateToLocationSelect() );
+}
+
+</script>
+
+
+<div class="col-md-4"></div>
+<div class="col-md-4 container">
+
+  <form method="post" action="{{  res.prod_mov[0]  | string() }}" onsubmit="return validateAll()">
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Update Product Movement
       </div>
-    </div>
-    <div class="row">
+      <div class="panel-body">
 
-      <label for="from location:">from location</label>
+        <div class="form-group">
+          <div class="mb-3">
 
-      <select name="from_location_id" class="form-control">
-        <option value="0">---</option>
+            <label for="quantity">Quantity</label>
+            <span id="quantity_error_span" class="label label-danger pull-right" style="visibility:hidden"></span>
 
-        {% for location in res.locations %}
-        <option value="{{ location }}" {% if (location == res.prod_mov[1]) %} selected="selected" {% endif %}>
-          {{ location }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div class="row">
+            <input type="number" name="quantity" id="quantity"  value="{{res.prod_mov[4]}}" class="form-control"
+              onfocusout="validateQuantity()">
+
+          </div>
+        </div>
 
 
-      <label for="to location:">to location</label>
+
+        <div class="form-group">
+
+          <label for="from location:">From Location</label>
+          <span id="from_location_id_error_span" class="label label-danger pull-right" style="visibility:hidden"></span>
+
+          <select name="from_location_id" class="form-control" id="from_location_id"
+            onchange="validateFromLocationSelect()">
+            <option value="0">---</option>
+
+            {% for location in res.locations %}
+            <option value="{{ location }}" {% if (location == res.prod_mov[1]) %} selected="selected" {% endif %}>
+              {{ location }}</option>
+            {% endfor %}
+          </select>
+        </div>
 
 
-      <select name="to_location_id" class="form-control">
-        <option value="0">---</option>
+        <div class="form-group">
 
-        {% for location in res.locations %}
-        <option value="{{ location }}" {% if (location == res.prod_mov[2]) %} selected="selected" {% endif %}>
-          {{ location }}</option>
-        {% endfor %}
-      </select>
-    </div>
 
-    <div class="row">
+          <label for="to location:">To Location</label>
 
-      <label for="product">product</label>
+          <span id="to_location_id_error_span" class="label label-danger pull-right" style="visibility:hidden"></span>
 
-      <select name="product_id" class="form-control">
-        {% for product in res.product_list %}
-        <option value="{{ product.product_id }}" {% if (product.product_id == res.prod_mov[3]) %} selected="selected"
-          {% endif %}>{{ product.product_id }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div class="row">
-      <input type="submit" value="Update Movement" class="btn btn-primary">
-    </div>
+          <select name="to_location_id" id="to_location_id" class="form-control" onchange="validateToLocationSelect()">
+            <option value="0">---</option>
+
+            {% for location in res.locations %}
+            <option value="{{ location }}" {% if (location == res.prod_mov[2]) %} selected="selected" {% endif %}>
+              {{ location }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-group">
+
+          <label for="product">Product</label>
+
+          <select name="product_id" class="form-control">
+            {% for product in res.product_list %}
+            <option value="{{ product.product_id }}" {% if (product.product_id == res.prod_mov[3]) %}
+              selected="selected" {% endif %}>{{ product.product_id }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group ">
+          <input type="submit" value="Update Movement" class="btn btn-primary btn-block">
+        </div>
+      </div>
+
   </form>
 </div>
 {% endblock %}

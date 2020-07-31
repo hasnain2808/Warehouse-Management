@@ -5,12 +5,41 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<!-- <div class="container">
 
   <form method="post">
 
     <input type="submit" value="Add new Location" class="btn btn-primary">
   </form>
+</div> -->
+
+<div class="col-md-4"></div>
+<div class="col-md-4 container">
+  <form method="post">
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Add Product
+        {% if res.visible %}
+        <span id="to_location_id_error_span" class="pull-right" style="display: inline;  padding: 1px; color: green;">
+          Added successfully
+        </span>
+
+        {% endif %}
+      </div>
+      <div class="panel-body">
+
+        <div class="form-group ">
+
+
+          <input type="submit" value="Add New Location" class="btn btn-primary btn-block">
+
+          <!-- onsubmit="return validateAll()"   -->
+        </div>
+      </div>
+    </div>
+  </form>
 </div>
+
 
 {% endblock %}

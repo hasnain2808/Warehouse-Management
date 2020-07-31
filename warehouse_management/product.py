@@ -20,20 +20,22 @@ def add_product():
 
     """
     if request.method == "POST":
-        # try:
-        product_id = request.form["product_id"]
-        print(product_id)
-        db = get_db()
-        db.execute("INSERT INTO Product (product_id) VALUES (?)",
-            (product_id,)
-        )
-        db.commit()
-        return redirect(url_for("product.add_product"))
-        # except sqlite3.Error as error:
-        #     print(error)
-        #     return render_template("error_occured.html")
-
-    return render_template("product/add_product.html")
+        try:
+            product_id = request.form["product_id"]
+            print(product_id)
+            db = get_db()
+            db.execute("INSERT INTO Product (product_name) VALUES (?)",
+                (product_id,)
+            )
+            db.commit()
+            return render_template("product/add_product.html",res={"visible":True}) 
+        except sqlite3.Error as error:
+            print(error)
+            return render_template("error_occured.html")
+     
+    return render_template("product/add_product.html",
+                    res={"visible":False},
+    )
 
 
 @bp.route("/view_product", methods=["GET"])
@@ -43,7 +45,7 @@ def view_product():
     """
     try:
         db = get_db()
-        products = db.execute("SELECT product_id FROM Product")
+        products = db.execute("SELECT product_id, product_name FROM Product")
         return render_template("product/view_product.html", result=products)
     except sqlite3.Error as error:
         print(error)
