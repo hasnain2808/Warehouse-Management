@@ -27,9 +27,57 @@ Go to [http://localhost:5000/](http://localhost:5000/) to use the App
 
 **Updated Screenshots**
 
-Add Product Movement
+•	Add Product Movement
 
-![]("images/AddProductMovement.png")
+![](images/AddProductMovement.png)
+
+•	Add product movement validations
+
+![](images/Addproductmovementvalidations.png)
+
+•	Add product movement success
+
+![](images/Addproductmovementsuccess.png)
+
+•	View Product Movement
+
+![](images/ViewProductMovement.png)
+
+•	Add Product
+
+![](images/Addproduct.png)
+
+•	View Product
+
+![](images/view_product.png)
+
+•	Add Location
+
+![](images/AddLocation.png)
+
+•	View Location
+
+![](images/view_location.png)
+
+•	Report
+
+![](images/report.png)
+
+•	Responsive	
+
+![](images/responsive.png)
+
+![](images/responsive1.png)
+
+![](images/responsive2.png)
+
+![](images/responsive3.png)
+
+Tables can be scrolled too
+
+Navbar
+
+![](images/responsive4.png)
 
 
 ## **This report summarizes the key features of the MVP**
