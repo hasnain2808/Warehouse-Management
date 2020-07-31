@@ -24,6 +24,14 @@ flask run
 
 Go to [http://localhost:5000/](http://localhost:5000/) to use the App
 
+
+**Updated Screenshots**
+
+Add Product Movement
+
+![]("images/AddProductMovement.png")
+
+
 ## **This report summarizes the key features of the MVP**
 
 **Database**
