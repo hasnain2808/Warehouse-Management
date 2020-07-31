@@ -20,8 +20,12 @@ def add_location():
     """
     if request.method == "POST":
         try:
+            location_id = request.form["location_id"]
+            print(location_id)
             db = get_db()
-            db.execute("INSERT INTO Location DEFAULT VALUES",)
+            db.execute("INSERT INTO Location (location_name)  VALUES(?)",
+            (location_id,)
+            )
             db.commit()
             return render_template("location/add_location.html",res={"visible":True},)
         except sqlite3.Error as error:
@@ -36,7 +40,7 @@ def view_location():
     """
     try:
         db = get_db()
-        locations = db.execute("SELECT location_id FROM Location")
+        locations = db.execute("SELECT location_id, location_name FROM Location")
         return render_template("location/view_location.html", result=locations)
     except sqlite3.Error as error:
         print(error)

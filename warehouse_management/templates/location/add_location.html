@@ -5,21 +5,37 @@
 {% endblock %}
 
 {% block content %}
-<!-- <div class="container">
 
-  <form method="post">
+<script type=text/javascript>
 
-    <input type="submit" value="Add new Location" class="btn btn-primary">
-  </form>
-</div> -->
+
+  function validateLocationId() {
+    var location_id = document.getElementById("location_id").value;
+    var message = document.getElementById("location_id_error_span");
+    if (location_id   == "" ){
+      message.innerHTML="\"Location Id\" cannot be empty";
+      message.style.visibility="visible";
+      return false
+    }
+    else{
+      message.style.visibility="hidden";
+      return true
+    }
+
+  }
+  function validateAll() {
+    return validateLocationId();
+  }
+
+</script>
 
 <div class="col-md-4"></div>
 <div class="col-md-4 container">
-  <form method="post">
+  <form method="post" onsubmit="return validateAll()">
 
     <div class="panel panel-default">
       <div class="panel-heading">
-        Add Product
+        Add Location
         {% if res.visible %}
         <span id="to_location_id_error_span" class="pull-right" style="display: inline;  padding: 1px; color: green;">
           Added successfully
@@ -28,14 +44,31 @@
         {% endif %}
       </div>
       <div class="panel-body">
+        <div class="form-group">
+          <div class="mb-3">
+            <label for="location_id">Location Name</label>
+            <span id="location_id_error_span" class="label label-danger pull-right" style="visibility:hidden"></span>
+            <input name="location_id" id="location_id" class="form-control" onfocusout="validateLocationId()">
+          </div>
+        </div>
 
         <div class="form-group ">
+          <div class="row">
+            <div class="col-md-4"></div>
+
+            <div class="col-md-4">
+
+              <input type="reset" class="btn btn-warning btn-block " value="Reset">
 
 
-          <input type="submit" value="Add New Location" class="btn btn-primary btn-block">
+            </div>
+            <div class="col-md-4">
+              <input type="submit" class="btn btn-primary btn-block " value="Submit">
 
-          <!-- onsubmit="return validateAll()"   -->
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
   </form>

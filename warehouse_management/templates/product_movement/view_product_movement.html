@@ -23,6 +23,7 @@
                             <th>From Location</th>
                             <th>To Location</th>
                             <th>Product Id</th>
+                            <th>Product Name</th>
                             <th>Quantity</th>
                             <th>Update</th>
                             <th>Delete</th>
@@ -36,6 +37,7 @@
                             <td>{{movement.from_location}}</td>
                             <td>{{movement.to_location}}</td>
                             <td>{{movement.product_id}}</td>
+                            <td>{{movement.product_name}}</td>
                             <td>{{movement.qty}}</td>
                             <td><a href={{ "update_product_movement/"  + movement.movement_id  | string() }}> <span
                                         class="glyphicon glyphicon-pencil"></span>

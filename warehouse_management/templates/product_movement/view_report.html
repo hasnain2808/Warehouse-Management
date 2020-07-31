@@ -29,7 +29,7 @@
                         {% for location,product in result.items() %}
                         {% for product,quantity in  result[location].items() %}
                         <tr>
-                            <td>{{product}}</td>
+                            <td>{{product[1]}}</td>
                             <td>{{location}}</td>
                             <td>{{quantity}}</td>
 

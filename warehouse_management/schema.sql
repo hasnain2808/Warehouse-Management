@@ -9,7 +9,8 @@ CREATE TABLE Product (
   );
 
 CREATE TABLE Location (
-  location_id INTEGER PRIMARY KEY AUTOINCREMENT
+  location_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  location_name TEXT
   );
 
 CREATE TABLE ProductMovement (

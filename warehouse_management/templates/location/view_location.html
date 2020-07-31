@@ -19,6 +19,8 @@
                     <thead>
                         <tr>
                             <th>Location Id</th>
+                            <th>Location Name</th>
+                            <th>Delete</th>
                         </tr>
 
                     </thead>
@@ -26,6 +28,7 @@
                         {% for location in result %}
                         <tr>
                             <td>{{location.location_id}}</td>
+                            <td>{{location.location_name}}</td>
 
                             <td><a href={{ "delete_location/"  + location.location_id  | string() }}> <span
                                         class="glyphicon glyphicon-remove"></span>

@@ -55,10 +55,11 @@ def add_product_movement():
                 db.commit()
 
                 db = get_db()
-                location_list = db.execute("SELECT location_id FROM Location",)
-                product_list = db.execute("SELECT product_id FROM Product ",)
+                location_list = db.execute("SELECT location_id, location_name FROM Location",)
+                product_list = db.execute("SELECT product_id ,product_name FROM Product ",)
 
-                locations = [location[0] for location in location_list]
+                locations = [[location[0],location[1]] for location in location_list]
+                print(locations)
                 return render_template(
                     "product_movement/add_product_movement.html",
                     res={"locations": locations, "product_list": product_list,"visible":True},
@@ -68,18 +69,15 @@ def add_product_movement():
                 print(error)
                 return render_template("error_occured.html")
 
-
-
-
         flash(error)
     try:
         db = get_db()
-        location_list = db.execute("SELECT location_id FROM Location",)
-        product_list = db.execute("SELECT product_id FROM Product ",)
+        location_list = db.execute("SELECT location_id, location_name FROM Location",)
+        product_list = db.execute("SELECT product_id, product_name FROM Product ",)
     except sqlite3.Error as error:
         print(error)
         return render_template("error_occured.html")
-    locations = [location[0] for location in location_list]
+    locations = [[location[0],location[1]] for location in location_list]
     return render_template(
         "product_movement/add_product_movement.html",
         res={"locations": locations, "product_list": product_list},
@@ -94,7 +92,8 @@ def view_product_movement():
     try:
         db = get_db()
         prod_mov = db.execute(
-            "SELECT  movement_id, timestamp, from_location, to_location, product_id, qty FROM ProductMovement Order By (timestamp)"
+            "SELECT  movement_id, timestamp, from_location, to_location, Product.product_id, qty, Product.product_name FROM ProductMovement  INNER JOIN Product "+
+            " ON Product.product_id=ProductMovement.product_id" ,
         )
     except sqlite3.Error as error:
         print(error)
@@ -198,7 +197,8 @@ def get_report():
         # Select All rows in the product movement
         db = get_db()
         prod_mov = db.execute(
-            "SELECT  from_location, to_location, product_id, qty FROM ProductMovement Order By (timestamp)",
+            "SELECT  from_location, to_location, Product.product_id, qty, Product.product_name FROM ProductMovement  INNER JOIN Product "+
+            " ON Product.product_id=ProductMovement.product_id" ,
         )
     except sqlite3.Error as error:
         print(error)
@@ -208,6 +208,7 @@ def get_report():
     for movement in prod_mov:
         # get the current row values in local variables
         curr_product = movement[2]
+        curr_product_name = movement[4]
         curr_from_location = movement[0]
         curr_to_location = movement[1]
         qty = movement[3]
@@ -215,23 +216,23 @@ def get_report():
         # Although negative quantity movements is not very useful but handling it just in case it is given by the user
         if curr_from_location:
             if curr_from_location in location:
-                if curr_product in location[curr_from_location]:
-                    location[curr_from_location][curr_product] -= qty
+                if tuple([curr_product, curr_product_name]) in location[curr_from_location]:
+                    location[curr_from_location][tuple([curr_product, curr_product_name])] -= qty
                 else:
-                    location[curr_from_location][curr_product] = -1 * (qty)
+                    location[curr_from_location][tuple([curr_product, curr_product_name])] = -1 * (qty)
             else:
                 temp = {}
-                temp[curr_product] = -1 * (qty)
+                temp[tuple([curr_product, curr_product_name])] = -1 * (qty)
                 location[curr_from_location] = temp
 
         if curr_to_location:
             if curr_to_location in location:
-                if curr_product in location[curr_to_location]:
-                    location[curr_to_location][curr_product] += qty
+                if tuple([curr_product, curr_product_name]) in location[curr_to_location]:
+                    location[curr_to_location][tuple([curr_product, curr_product_name])] += qty
                 else:
-                    location[curr_to_location][curr_product] = qty
+                    location[curr_to_location][tuple([curr_product, curr_product_name])] = qty
             else:
                 temp = {}
-                temp[curr_product] = qty
+                temp[tuple([curr_product, curr_product_name])] = qty
                 location[curr_to_location] = temp
     return render_template("product_movement/view_report.html", result=location)
