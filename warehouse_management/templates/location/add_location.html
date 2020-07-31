@@ -6,28 +6,9 @@
 
 {% block content %}
 
-<script type=text/javascript>
 
-
-  function validateLocationId() {
-    var location_id = document.getElementById("location_id").value;
-    var message = document.getElementById("location_id_error_span");
-    if (location_id   == "" ){
-      message.innerHTML="\"Location Id\" cannot be empty";
-      message.style.visibility="visible";
-      return false
-    }
-    else{
-      message.style.visibility="hidden";
-      return true
-    }
-
-  }
-  function validateAll() {
-    return validateLocationId();
-  }
-
-</script>
+<script type=text/javascript src="{{
+  url_for('static', filename='js/location.js') }}"></script>
 
 <div class="col-md-4"></div>
 <div class="col-md-4 container">
